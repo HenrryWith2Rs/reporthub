@@ -1,14 +1,11 @@
 import express from 'express';
 const app = express();
-import cors from 'cors';
-import koreRoutes from './routes/koreRoutes';
 
-// middleware
 app.use(express.json());
-app.use(cors({}));
 
-// routes
-app.use('/api', koreRoutes);
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
 
 const port = 3000;
 app.listen(port, () => {
