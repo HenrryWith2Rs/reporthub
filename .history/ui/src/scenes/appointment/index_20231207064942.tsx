@@ -17,8 +17,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { format } from 'date-fns';
 import { getLastNDays } from '../../utils/dateUtils';
 import { ReportType } from '../../types/koreTypes';
-import useBotData from '../../api/dataHooks/useAppointmentData';
-import BotReport from '../../components/BotReport';
+import { useQuery } from '@tanstack/react-query';
+import { fetchAppointmentData } from '../../api/data/koreBotDataFetcher';
 
 const Appointment = () => {
   const theme = useTheme();
@@ -27,29 +27,38 @@ const Appointment = () => {
   // State variables
   const [dateStart, setDateStart] = useState<Date | null>(new Date());
   const [dateEnd, setDateEnd] = useState<Date | null>(new Date());
-  const [reportType, setReportType] = useState<ReportType>('summary');
-  const [isFetchEnabled, setIsFetchEnabled] = useState<boolean>(false);
+  const [reportType, setReportType] = useState<ReportType>('detailed');
+  const [isFetchEnabled, setIsFetchEnabled] = useState<boolean>(true);
 
   // Effect to set initial date values
   useEffect(() => {
+    if (!isFetchEnabled) {
+      return;
+    }
+
     const { startDate, endDate } = getLastNDays(1);
     setDateStart(startDate);
     setDateEnd(endDate);
-  }, []);
+  }, [isFetchEnabled]);
 
   // Format date values
   const formattedStartDate = formatDate(dateStart);
   const formattedEndDate = formatDate(dateEnd);
 
-  // Fetch data using useBotData
-  const { data, isFetching, error, refetch } = useBotData(
-    'appointment',
-    formattedStartDate,
-    formattedEndDate,
-    reportType,
-    'html',
-    isFetchEnabled
-  );
+  // Fetch data using useQuery
+  const { data, isFetching, error, refetch } = useQuery({
+    queryKey: ['apptData', formattedStartDate, formattedEndDate],
+    queryFn: () => {
+      return fetchAppointmentData({
+        bot: 'appointment',
+        reportType,
+        format: 'html',
+        dateStart: formattedStartDate,
+        dateEnd: formattedEndDate,
+      });
+    },
+    enabled: isFetchEnabled, // Fetch data only when isFetchEnabled is true
+  });
 
   // Log loading, error, or API response
   if (isFetching) {
@@ -89,14 +98,16 @@ const Appointment = () => {
             onChange={(newValue) => setDateEnd(newValue)}
           />
           <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel>Report</InputLabel>
+            <InputLabel id="demo-simple-select-label">Report</InputLabel>
             <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
               value={reportType}
               label="Report"
               onChange={handleSelectChange}
             >
-              <MenuItem value={'summary'}>Summary</MenuItem>
               <MenuItem value={'detailed'}>Detailed</MenuItem>
+              <MenuItem value={'summary'}>Summary</MenuItem>
             </Select>
           </FormControl>
           <Button
@@ -107,16 +118,12 @@ const Appointment = () => {
             Submit
           </Button>
         </Stack>
-        <Box m="40px 0 0 0" height="100vh">
-          {isFetching ? (
-            <CircularProgress />
-          ) : error ? (
-            <div>Error fetching data. Please try again.</div>
-          ) : data ? (
-            <BotReport html={data.message} />
-          ) : (
-            <div>Click on the submit button to generate a report</div>
+        <Box m="40px 0 0 0" height="10vh">
+          {dateStart && (
+            <div>Date Start: {format(dateStart, 'yyyy-MM-dd')}</div>
           )}
+          {dateEnd && <div>Date End: {format(dateEnd, 'yyyy-MM-dd')}</div>}
+          {reportType && <div>Report Type: {reportType}</div>}
         </Box>
       </Box>
     </Box>

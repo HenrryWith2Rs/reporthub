@@ -107,13 +107,13 @@ const Appointment = () => {
             Submit
           </Button>
         </Stack>
-        <Box m="40px 0 0 0" height="100vh">
+        <Box m="40px 0 0 0" height="10vh">
           {isFetching ? (
             <CircularProgress />
           ) : error ? (
             <div>Error fetching data. Please try again.</div>
           ) : data ? (
-            <BotReport html={data.message} />
+            <BotReport html={data} />
           ) : (
             <div>Click on the submit button to generate a report</div>
           )}

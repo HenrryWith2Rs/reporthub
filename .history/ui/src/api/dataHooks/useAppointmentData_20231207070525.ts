@@ -13,8 +13,7 @@ const useBotData = (
   dateStart: string,
   dateEnd: string,
   reportType: string,
-  format: string,
-  isFetchEnabled: boolean
+  format: string
 ) => {
   const params: RequestParameters = {
     bot: botType as BotType,
@@ -27,7 +26,7 @@ const useBotData = (
   const { data, isFetching, error, refetch } = useQuery({
     queryKey: [`${botType}Data`, dateStart, dateEnd],
     queryFn: () => fetchAppointmentData(params),
-    enabled: isFetchEnabled,
+    enabled: true, // You can adjust the condition for enabling/disabling fetching
   });
 
   return {

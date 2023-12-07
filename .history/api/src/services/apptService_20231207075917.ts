@@ -12,7 +12,7 @@ function handleAppointmentDetailedHtml(
   dateStart: string,
   dateEnd: string
 ): string {
-  return generateApptDetailedHtml();
+  return `Handling appointment detailed report in HTML format with dates: ${dateStart}, ${dateEnd}`;
 }
 
 function handleAppointmentDetailedPdf(

@@ -107,7 +107,7 @@ const Appointment = () => {
             Submit
           </Button>
         </Stack>
-        <Box m="40px 0 0 0" height="100vh">
+        <Box m="40px 0 0 0" height="10vh">
           {isFetching ? (
             <CircularProgress />
           ) : error ? (

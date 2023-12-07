@@ -24,6 +24,7 @@ const useBotData = (
     dateEnd,
   };
 
+  console.log(isFetchEnabled);
   const { data, isFetching, error, refetch } = useQuery({
     queryKey: [`${botType}Data`, dateStart, dateEnd],
     queryFn: () => fetchAppointmentData(params),

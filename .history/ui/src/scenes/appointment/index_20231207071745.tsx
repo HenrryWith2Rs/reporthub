@@ -18,7 +18,6 @@ import { format } from 'date-fns';
 import { getLastNDays } from '../../utils/dateUtils';
 import { ReportType } from '../../types/koreTypes';
 import useBotData from '../../api/dataHooks/useAppointmentData';
-import BotReport from '../../components/BotReport';
 
 const Appointment = () => {
   const theme = useTheme();
@@ -107,13 +106,13 @@ const Appointment = () => {
             Submit
           </Button>
         </Stack>
-        <Box m="40px 0 0 0" height="100vh">
+        <Box m="40px 0 0 0" height="10vh">
           {isFetching ? (
             <CircularProgress />
           ) : error ? (
             <div>Error fetching data. Please try again.</div>
           ) : data ? (
-            <BotReport html={data.message} />
+            <div>Data loaded successfully!</div>
           ) : (
             <div>Click on the submit button to generate a report</div>
           )}
