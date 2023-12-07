@@ -6,6 +6,6 @@ import { processBillRequest } from '../controllers/billController';
 
 const koreEndpoint = '/kore';
 router.post(`${koreEndpoint}/appt`, processApptRequest);
-router.post(`${koreEndpoint}/bill`, processBillRequest);
+router.get(`${koreEndpoint}/bill`, processBillRequest);
 
 export default router;

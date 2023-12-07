@@ -15,7 +15,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { format } from 'date-fns';
 import { getLastNDays } from '../../utils/dateUtils';
-import { ReportType } from '../../types/koreTypes';
+import { RequestParameters, ReportType } from '../../types/koreTypes';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAppointmentData } from '../../api/data/koreBotDataFetcher';
 

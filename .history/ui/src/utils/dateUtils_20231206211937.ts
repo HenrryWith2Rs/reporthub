@@ -1,4 +1,4 @@
-import { subDays } from 'date-fns';
+import { subDays, format } from 'date-fns';
 
 export function getLastNDays(n: number): {
   startDate: Date;

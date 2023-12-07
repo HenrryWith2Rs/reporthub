@@ -15,7 +15,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { format } from 'date-fns';
 import { getLastNDays } from '../../utils/dateUtils';
-import { ReportType } from '../../types/koreTypes';
+import {
+  RequestParameters,
+  BotType,
+  ReportType,
+  FormatType,
+} from '../../types/koreTypes';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAppointmentData } from '../../api/data/koreBotDataFetcher';
 
@@ -26,10 +31,6 @@ const Appointment = () => {
   const [dateStart, setDateStart] = useState<Date | null>(new Date());
   const [dateEnd, setDateEnd] = useState<Date | null>(new Date());
   const [reportType, setReportType] = useState<ReportType>('detailed');
-  const [isFetchEnabled, setIsFetchEnabled] = useState<boolean>(true);
-
-  const formattedStartDate = formatDate(dateStart);
-  const formattedEndDate = formatDate(dateEnd);
 
   useEffect(() => {
     const { startDate, endDate } = getLastNDays(1);
@@ -41,30 +42,43 @@ const Appointment = () => {
     setReportType(event.target.value as ReportType);
   };
 
-  const { data, isFetching, error, refetch } = useQuery({
-    queryKey: ['apptData'],
-    queryFn: () => {
-      return fetchAppointmentData({
-        bot: 'appointment',
-        reportType: reportType,
-        format: 'html',
-        dateStart: formattedStartDate,
-        dateEnd: formattedEndDate,
-      });
-    },
-    enabled: true,
-  });
+  const retrieveData = async (
+    formattedStartDate: string,
+    formattedEndDate: string
+  ) => {
+    const params: RequestParameters = {
+      bot: 'appointment',
+      reportType: reportType,
+      format: 'html',
+      formattedStartDate,
+      formattedEndDate,
+    };
 
-  if (isFetching) {
-    console.log('Loading...');
-  } else if (error) {
-    console.error('Error fetching data');
-  } else {
-    console.log('API Response:', data);
-  }
+    const { data, isLoading, isError } = useQuery({
+      queryKey: ['apptData'],
+      queryFn: () => {
+        return fetchAppointmentData(params);
+      },
+    });
+
+    if (isLoading) {
+      console.log('Loading...');
+    } else if (isError) {
+      console.error('Error fetching data');
+    } else {
+      console.log('API Response:', data);
+
+      // Handle the API response as needed
+      // ...
+    }
+  };
+
   const handleSubmit = () => {
-    setIsFetchEnabled(false);
-    refetch();
+    const formattedStartDate = formatDate(dateStart);
+    const formattedEndDate = formatDate(dateEnd);
+
+    // Fetch data from the API
+    retrieveData(formattedStartDate, formattedEndDate);
   };
 
   return (

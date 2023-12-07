@@ -1,23 +1,20 @@
-import { useState, useEffect } from 'react';
-import { tokens } from '../../ThemeRegistry/theme';
-import Header from '../../components/Header';
+import { useState } from 'react';
 import {
   useTheme,
   Box,
   Stack,
   Button,
-  MenuItem,
-  InputLabel,
   FormControl,
+  InputLabel,
+  MenuItem,
 } from '@mui/material';
+import { tokens } from '../../ThemeRegistry/theme';
+import Header from '../../components/Header';
 import SendIcon from '@mui/icons-material/Send';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { format } from 'date-fns';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { getLastNDays } from '../../utils/dateUtils';
-import { ReportType } from '../../types/koreTypes';
-import { useQuery } from '@tanstack/react-query';
-import { fetchAppointmentData } from '../../api/data/koreBotDataFetcher';
 
 const Appointment = () => {
   const theme = useTheme();
@@ -25,46 +22,10 @@ const Appointment = () => {
 
   const [dateStart, setDateStart] = useState<Date | null>(new Date());
   const [dateEnd, setDateEnd] = useState<Date | null>(new Date());
-  const [reportType, setReportType] = useState<ReportType>('detailed');
-  const [isFetchEnabled, setIsFetchEnabled] = useState<boolean>(true);
-
-  const formattedStartDate = formatDate(dateStart);
-  const formattedEndDate = formatDate(dateEnd);
-
-  useEffect(() => {
-    const { startDate, endDate } = getLastNDays(1);
-    setDateStart(startDate);
-    setDateEnd(endDate);
-  }, []);
+  const [reportType, setReportType] = useState<string>('detailed');
 
   const handleSelectChange = (event: SelectChangeEvent) => {
-    setReportType(event.target.value as ReportType);
-  };
-
-  const { data, isFetching, error, refetch } = useQuery({
-    queryKey: ['apptData'],
-    queryFn: () => {
-      return fetchAppointmentData({
-        bot: 'appointment',
-        reportType: reportType,
-        format: 'html',
-        dateStart: formattedStartDate,
-        dateEnd: formattedEndDate,
-      });
-    },
-    enabled: true,
-  });
-
-  if (isFetching) {
-    console.log('Loading...');
-  } else if (error) {
-    console.error('Error fetching data');
-  } else {
-    console.log('API Response:', data);
-  }
-  const handleSubmit = () => {
-    setIsFetchEnabled(false);
-    refetch();
+    setReportType(event.target.value as string);
   };
 
   return (
@@ -97,11 +58,7 @@ const Appointment = () => {
               <MenuItem value={'summary'}>Summary</MenuItem>
             </Select>
           </FormControl>
-          <Button
-            variant="contained"
-            endIcon={<SendIcon />}
-            onClick={handleSubmit}
-          >
+          <Button variant="contained" endIcon={<SendIcon />}>
             Submit
           </Button>
         </Stack>
@@ -115,10 +72,6 @@ const Appointment = () => {
       </Box>
     </Box>
   );
-};
-
-const formatDate = (date: Date | null): string => {
-  return date ? format(date, 'yyyy-MM-dd') : '';
 };
 
 export default Appointment;
