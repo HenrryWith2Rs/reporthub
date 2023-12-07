@@ -8,6 +8,10 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
+import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
+import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
@@ -16,6 +20,7 @@ import PieChartOutlineOutlinedIcon from '@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from '@mui/icons-material/TimelineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import BedIcon from '@mui/icons-material/Bed';
 
 type ItemProps = {
   title: string;
@@ -157,6 +162,20 @@ const Sidebar = () => {
               title="Billing"
               to="/kore/bill"
               icon={<AttachMoneyIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Contacts Information"
+              to="/contacts"
+              icon={<ContactsOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Invoices Balances"
+              to="/invoices"
+              icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />

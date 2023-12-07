@@ -14,7 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
+        <QueryClientProvider>
           <App />
         </QueryClientProvider>
       </BrowserRouter>

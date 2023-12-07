@@ -13,9 +13,9 @@ function App() {
   return (
     <ThemeRegistry>
       <div className="app">
-        <Sidebar />
+        <Topbar />
         <main className="content">
-          <Topbar />
+          <Sidebar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/kore/appt" element={<Appointment />} />

@@ -3,7 +3,6 @@ import ThemeRegistry from './ThemeRegistry/ThemeRegistry';
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
 import Dashboard from './scenes/dashboard';
-import Appointment from './scenes/appointment';
 import Bar from './scenes/bar';
 import Pie from './scenes/pie';
 import Line from './scenes/line';
@@ -18,7 +17,11 @@ function App() {
           <Topbar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/kore/appt" element={<Appointment />} />
+            {/* <Route path="/airbnb" element={<Airbnb />} /> */}
+            {/* <Route path="/team" element={<Team />} /> */}
+            {/* <Route path="/contacts" element={<Contacts />} /> */}
+            {/* <Route path="/invoices" element={<Invoices />} /> */}
+            {/* <Route path="/faq" element={<FAQ />} /> */}
             <Route path="/bar" element={<Bar />} />
             <Route path="/pie" element={<Pie />} />
             <Route path="/line" element={<Line />} />

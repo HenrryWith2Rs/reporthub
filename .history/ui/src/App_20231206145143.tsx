@@ -18,7 +18,8 @@ function App() {
           <Topbar />
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/kore/appt" element={<Appointment />} />
+            <Route path="/airbnb" element={<Appointment />} />
+
             <Route path="/bar" element={<Bar />} />
             <Route path="/pie" element={<Pie />} />
             <Route path="/line" element={<Line />} />
