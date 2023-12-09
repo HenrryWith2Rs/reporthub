@@ -22,23 +22,3 @@ export const increaseDateByOneDay = (date: Date | null): Date | null => {
 export const formatDate = (date: Date | null): string => {
   return date ? format(date, 'yyyy-MM-dd') : '';
 };
-
-export const handleLeftArrowClick = (
-  dateStart: Date | null,
-  setDateStart: React.Dispatch<React.SetStateAction<Date | null>>,
-  dateEnd: Date | null,
-  setDateEnd: React.Dispatch<React.SetStateAction<Date | null>>
-) => {
-  setDateStart(decreaseDateByOneDay(dateStart));
-  setDateEnd(decreaseDateByOneDay(dateEnd));
-};
-
-export const handleRightArrowClick = (
-  dateStart: Date | null,
-  setDateStart: React.Dispatch<React.SetStateAction<Date | null>>,
-  dateEnd: Date | null,
-  setDateEnd: React.Dispatch<React.SetStateAction<Date | null>>
-) => {
-  setDateStart(increaseDateByOneDay(dateStart));
-  setDateEnd(increaseDateByOneDay(dateEnd));
-};

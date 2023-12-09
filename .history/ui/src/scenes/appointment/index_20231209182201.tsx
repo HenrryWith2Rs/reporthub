@@ -15,9 +15,11 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { format } from 'date-fns';
 import {
   getLastNDays,
-  formatDate,
+  handleLeftArrowClick,
+  handleRightArrowClick,
   decreaseDateByOneDay,
   increaseDateByOneDay,
 } from '../../utils/dateUtils';
@@ -95,7 +97,7 @@ const Appointment = () => {
       <Box m="40px 0 0 0" height="75vh">
         <Stack direction="row" spacing={1}>
           <IconButton>
-            <ArrowLeftIcon onClick={handleLeftArrowClick} />
+            <ArrowLeftIcon />
           </IconButton>
           <DatePicker
             label="Start Date"
@@ -112,7 +114,7 @@ const Appointment = () => {
             maxDate={new Date()}
           />
           <IconButton>
-            <ArrowRightIcon onClick={handleRightArrowClick} />
+            <ArrowRightIcon />
           </IconButton>
           <FormControl sx={{ minWidth: 120 }}>
             <InputLabel>Report</InputLabel>
@@ -135,7 +137,7 @@ const Appointment = () => {
         </Stack>
         <Box m="40px 0 0 0" height="100vh">
           {isFetching ? (
-            <CircularProgress sx={{ color: colors.greenAccent[400] }} />
+            <CircularProgress />
           ) : error ? (
             <div>Error fetching data. Please try again.</div>
           ) : data ? (
@@ -147,6 +149,10 @@ const Appointment = () => {
       </Box>
     </Box>
   );
+};
+
+const formatDate = (date: Date | null): string => {
+  return date ? format(date, 'yyyy-MM-dd') : '';
 };
 
 export default Appointment;

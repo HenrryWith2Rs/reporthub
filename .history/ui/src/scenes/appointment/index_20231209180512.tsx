@@ -15,12 +15,8 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import {
-  getLastNDays,
-  formatDate,
-  decreaseDateByOneDay,
-  increaseDateByOneDay,
-} from '../../utils/dateUtils';
+import { format } from 'date-fns';
+import { getLastNDays } from '../../utils/dateUtils';
 import { ReportType } from '../../types/koreTypes';
 import useBotData from '../../api/dataHooks/useAppointmentData';
 import BotReport from '../../components/BotReport';
@@ -72,18 +68,6 @@ const Appointment = () => {
     setReportType(event.target.value as ReportType);
   };
 
-  // Handle left arrow button click
-  const handleLeftArrowClick = () => {
-    setDateStart(decreaseDateByOneDay(dateStart));
-    setDateEnd(decreaseDateByOneDay(dateEnd));
-  };
-
-  // Handle right arrow button click
-  const handleRightArrowClick = () => {
-    setDateStart(increaseDateByOneDay(dateStart));
-    setDateEnd(increaseDateByOneDay(dateEnd));
-  };
-
   // Handle form submission
   const handleSubmit = () => {
     setIsFetchEnabled(true); // Enable fetching
@@ -93,9 +77,9 @@ const Appointment = () => {
     <Box m="20px">
       <Header title="Appointment" subtitle="Kore Appointment Bot reports" />
       <Box m="40px 0 0 0" height="75vh">
-        <Stack direction="row" spacing={1}>
+        <Stack direction="row" spacing={2}>
           <IconButton>
-            <ArrowLeftIcon onClick={handleLeftArrowClick} />
+            <ArrowLeftIcon />
           </IconButton>
           <DatePicker
             label="Start Date"
@@ -109,10 +93,9 @@ const Appointment = () => {
             format="yyyy-MM-dd"
             value={dateEnd}
             onChange={(newValue) => setDateEnd(newValue)}
-            maxDate={new Date()}
           />
           <IconButton>
-            <ArrowRightIcon onClick={handleRightArrowClick} />
+            <ArrowRightIcon />
           </IconButton>
           <FormControl sx={{ minWidth: 120 }}>
             <InputLabel>Report</InputLabel>
@@ -135,7 +118,7 @@ const Appointment = () => {
         </Stack>
         <Box m="40px 0 0 0" height="100vh">
           {isFetching ? (
-            <CircularProgress sx={{ color: colors.greenAccent[400] }} />
+            <CircularProgress />
           ) : error ? (
             <div>Error fetching data. Please try again.</div>
           ) : data ? (
@@ -147,6 +130,10 @@ const Appointment = () => {
       </Box>
     </Box>
   );
+};
+
+const formatDate = (date: Date | null): string => {
+  return date ? format(date, 'yyyy-MM-dd') : '';
 };
 
 export default Appointment;

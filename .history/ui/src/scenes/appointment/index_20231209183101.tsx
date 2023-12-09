@@ -15,9 +15,9 @@ import {
 import SendIcon from '@mui/icons-material/Send';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { format } from 'date-fns';
 import {
   getLastNDays,
-  formatDate,
   decreaseDateByOneDay,
   increaseDateByOneDay,
 } from '../../utils/dateUtils';
@@ -147,6 +147,10 @@ const Appointment = () => {
       </Box>
     </Box>
   );
+};
+
+const formatDate = (date: Date | null): string => {
+  return date ? format(date, 'yyyy-MM-dd') : '';
 };
 
 export default Appointment;
