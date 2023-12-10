@@ -92,7 +92,6 @@ const Appointment = () => {
   const handleSubmit = () => {
     setIsFetchEnabled(true); // Enable fetching
     refetch(); // Trigger API call
-    setIsFetchEnabled(false); // Enable fetching
   };
   return (
     <Box m="20px">

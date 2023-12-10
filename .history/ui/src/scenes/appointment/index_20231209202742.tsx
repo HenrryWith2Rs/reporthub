@@ -65,9 +65,10 @@ const Appointment = () => {
   } else if (error) {
     console.error('Error fetching data');
   } else if (data) {
-    console.log('API Response:', data);
+    // console.log('API Response:', data);
     if (data.message !== apiResponse) {
       setApiResponse(data.message);
+      console.log('hey');
     }
   }
 

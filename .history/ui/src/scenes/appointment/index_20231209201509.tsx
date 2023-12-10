@@ -66,9 +66,7 @@ const Appointment = () => {
     console.error('Error fetching data');
   } else if (data) {
     console.log('API Response:', data);
-    if (data.message !== apiResponse) {
-      setApiResponse(data.message);
-    }
+    // Display data or update state as needed
   }
 
   // Handle select change
@@ -91,8 +89,9 @@ const Appointment = () => {
   // Handle form submission
   const handleSubmit = () => {
     setIsFetchEnabled(true); // Enable fetching
-    refetch(); // Trigger API call
-    setIsFetchEnabled(false); // Enable fetching
+    refetch().then(() => {
+      setIsFetchEnabled(false); // Disable fetching after successful API call
+    });
   };
   return (
     <Box m="20px">
@@ -143,8 +142,8 @@ const Appointment = () => {
             <CircularProgress sx={{ color: colors.greenAccent[400] }} />
           ) : error ? (
             <div>Error fetching data. Please try again.</div>
-          ) : apiResponse ? (
-            <BotReport html={apiResponse} />
+          ) : data ? (
+            <BotReport html={data.message} />
           ) : (
             <div>Click on the submit button to generate a report</div>
           )}

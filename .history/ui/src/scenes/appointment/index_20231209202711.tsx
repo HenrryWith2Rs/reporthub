@@ -68,6 +68,7 @@ const Appointment = () => {
     console.log('API Response:', data);
     if (data.message !== apiResponse) {
       setApiResponse(data.message);
+      console.log('hey');
     }
   }
 
