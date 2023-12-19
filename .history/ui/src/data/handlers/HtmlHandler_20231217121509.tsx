@@ -1,4 +1,4 @@
-// HtmlHandler.ts
+// tmlHandler.ts
 import React from 'react';
 import { BotType, ReportType } from '../../types/koreTypes';
 import HtmlViewer from '../../components/HtmlViewer';
@@ -12,7 +12,7 @@ export function HtmlHandler(
   let htmlFunction = generateContent(bot, reportType);
 
   // convert apiResponse to resultsArray for html functions
-  const resultsArray = apiResponse?.[0].resultSet;
+  const resultsArray = apiResponse?.resultSet;
 
   // Directly call the dynamically generated function
   const html: string = htmlFunction(date, resultsArray);

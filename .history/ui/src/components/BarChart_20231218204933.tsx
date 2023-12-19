@@ -6,17 +6,17 @@ import { getDataByIntent, getKeysByIntent } from '../data/dataParser';
 
 type BarChartProps = {
   isDashboard: boolean;
-  dates: string[];
-  filteredData: any[];
+  keys: string[];
+  data: any[];
 };
 
-const BarChart: React.FC<BarChartProps> = ({ isDashboard }) => {
+const BarChart: React.FC<BarChartProps> = ({ isDashboard, keys, data }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const possibleIntents = ['Summary', 'Confirm', 'Cancel', 'Reschedule'];
   const [selectedIntent, setSelectedIntent] = useState('Summary');
-  const data = getDataByIntent(selectedIntent);
-  const keys = getKeysByIntent(selectedIntent);
+
+  console.log(data);
 
   const handleIntentChange = (newIntent: string) => {
     setSelectedIntent(newIntent);

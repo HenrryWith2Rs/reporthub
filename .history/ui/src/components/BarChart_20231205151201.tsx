@@ -1,22 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTheme, MenuItem, Select } from '@mui/material';
 import { ResponsiveBar, BarDatum } from '@nivo/bar';
 import { tokens } from '../ThemeRegistry/theme';
 import { getDataByIntent, getKeysByIntent } from '../data/dataParser';
 
-type BarChartProps = {
-  isDashboard: boolean;
-  dates: string[];
-  filteredData: any[];
-};
-
-const BarChart: React.FC<BarChartProps> = ({ isDashboard }) => {
+const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const possibleIntents = ['Summary', 'Confirm', 'Cancel', 'Reschedule'];
   const [selectedIntent, setSelectedIntent] = useState('Summary');
   const data = getDataByIntent(selectedIntent);
   const keys = getKeysByIntent(selectedIntent);
+
+  console.log(data);
 
   const handleIntentChange = (newIntent: string) => {
     setSelectedIntent(newIntent);

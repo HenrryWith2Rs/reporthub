@@ -2,12 +2,24 @@
 import React, { useState, useEffect } from 'react';
 import TagsButtonGroup from '../../components/TagsButtonGroup';
 import BarChart from '../../components/BarChart';
-import { HandlerProps } from '../../types/koreTypes';
+import { BotType, ReportType } from '../../types/koreTypes';
 import { extractUniqueTags } from '../utils/koreDataUtils';
 import Box from '@mui/material/Box';
 
-const GraphHandler: React.FC<HandlerProps> = ({ apiResponse }) => {
-  const resultsArray = apiResponse?.[0].resultSet;
+type HandlerProps = {
+  apiResponse: any;
+  bot: BotType;
+  reportType: ReportType;
+  date: string;
+};
+
+const GraphHandler: React.FC<HandlerProps> = ({
+  apiResponse,
+  bot,
+  reportType,
+  date,
+}) => {
+  const resultsArray = apiResponse.resultSet;
   const tags = extractUniqueTags(resultsArray);
   const dates = getDatesFromApiResponse(apiResponse);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -35,19 +47,18 @@ const GraphHandler: React.FC<HandlerProps> = ({ apiResponse }) => {
 
   console.log('selectedTags', selectedTags);
   console.log('dates', dates);
-  console.log('apiResponse', apiResponse);
 
   return (
     <div>
       <TagsButtonGroup
-        tags={tags}
+        tags={dates}
         selectedTags={selectedTags}
         setSelectedTags={setSelectedTags}
       />
       <Box height="75vh">
         <BarChart
           isDashboard={false}
-          dates={dates}
+          dates={tags}
           filteredData={filteredData}
         />
       </Box>

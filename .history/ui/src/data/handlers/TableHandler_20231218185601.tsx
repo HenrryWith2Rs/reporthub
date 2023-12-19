@@ -1,15 +1,25 @@
-// TableHandler.tsx
-import React, { useState, useEffect } from 'react';
-// import TagsViewer from '../../components/TagsViewer';
+import React, { useState } from 'react';
+import TagsViewer from '../../components/TagsViewer';
 import TableViewer from '../../components/TableViewer';
-import TagsButtonGroup from '../../components/TagsButtonGroup';
-import { HandlerProps } from '../../types/koreTypes';
+import { BotType, ReportType } from '../../types/koreTypes';
 import { extractUniqueTags } from '../utils/koreDataUtils';
 
-const TableHandler: React.FC<HandlerProps> = ({ apiResponse }) => {
-  const resultsArray = apiResponse?.[0].resultSet;
+type HandlerProps = {
+  apiResponse: any;
+  bot: BotType;
+  reportType: ReportType;
+  date: string;
+};
+
+const TableHandler: React.FC<HandlerProps> = ({
+  apiResponse,
+  bot,
+  reportType,
+  date,
+}) => {
+  const resultsArray = apiResponse.resultSet;
   const tags = extractUniqueTags(resultsArray);
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(tags);
   const [filteredData, setFilteredData] = useState<any[]>(resultsArray);
 
   const updateFilteredData = (data: any[], selectedTagsArr: string[]) => {
@@ -28,18 +38,16 @@ const TableHandler: React.FC<HandlerProps> = ({ apiResponse }) => {
     }
   };
 
-  useEffect(() => {
-    updateFilteredData(resultsArray, selectedTags);
-  }, [selectedTags]);
-
   console.log('selectedTags', selectedTags);
 
   return (
     <div>
-      <TagsButtonGroup
+      <TagsViewer
         tags={tags}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
+        displayedTags={displayedTags}
+        onDeleteTag={handleDeleteTag}
+        updateDisplayedTags={updateDisplayedTags}
+        onRestoreAllTags={handleRestoreAllTags}
       />
       <TableViewer data={filteredData} />
     </div>

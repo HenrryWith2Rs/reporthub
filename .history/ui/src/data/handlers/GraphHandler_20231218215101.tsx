@@ -2,14 +2,26 @@
 import React, { useState, useEffect } from 'react';
 import TagsButtonGroup from '../../components/TagsButtonGroup';
 import BarChart from '../../components/BarChart';
-import { HandlerProps } from '../../types/koreTypes';
+import { BotType, ReportType } from '../../types/koreTypes';
 import { extractUniqueTags } from '../utils/koreDataUtils';
 import Box from '@mui/material/Box';
 
-const GraphHandler: React.FC<HandlerProps> = ({ apiResponse }) => {
+type HandlerProps = {
+  apiResponse: any;
+  bot: BotType;
+  reportType: ReportType;
+  date: string;
+};
+
+const GraphHandler: React.FC<HandlerProps> = ({
+  apiResponse,
+  bot,
+  reportType,
+  date,
+}) => {
   const resultsArray = apiResponse?.[0].resultSet;
   const tags = extractUniqueTags(resultsArray);
-  const dates = getDatesFromApiResponse(apiResponse);
+  const dates = apiResponse.date;
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>(resultsArray);
 

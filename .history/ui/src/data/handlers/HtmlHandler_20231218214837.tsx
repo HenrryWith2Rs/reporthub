@@ -1,4 +1,4 @@
-// HtmlHandler.ts
+// tmlHandler.ts
 import React from 'react';
 import { BotType, ReportType } from '../../types/koreTypes';
 import HtmlViewer from '../../components/HtmlViewer';

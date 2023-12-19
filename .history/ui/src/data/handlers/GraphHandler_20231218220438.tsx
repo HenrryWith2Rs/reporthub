@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 const GraphHandler: React.FC<HandlerProps> = ({ apiResponse }) => {
   const resultsArray = apiResponse?.[0].resultSet;
   const tags = extractUniqueTags(resultsArray);
-  const dates = getDatesFromApiResponse(apiResponse);
+  const dates = apiResponse.date;
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [filteredData, setFilteredData] = useState<any[]>(resultsArray);
 

@@ -6,8 +6,8 @@ import { getDataByIntent, getKeysByIntent } from '../data/dataParser';
 
 type BarChartProps = {
   isDashboard: boolean;
-  dates: string[];
-  filteredData: any[];
+  keys: string[];
+  data: any[];
 };
 
 const BarChart: React.FC<BarChartProps> = ({ isDashboard }) => {
